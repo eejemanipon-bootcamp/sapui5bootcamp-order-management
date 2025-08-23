@@ -2,24 +2,46 @@ sap.ui.define([], () => {
     "use strict";
 
     var constants = {
-        FRAGMENT : {
-            "FirstDialog" : "com.ui5.trng.sapui5bootcampordermanagement.fragment.FirstDialog",
-            "SecondDialog" : "com.ui5.trng.sapui5bootcampordermanagement.fragment.SecondDialog"
-        },
+        EMPTY : "",
+        SPACE : " ",
         ROUTE : {
-            "Details" : "RouteDetails"
+            "Create" : "RouteCreate",
+            "Details" : "RouteDetails",
+            "Edit" : "RouteEdit"
         },
-        FIELD : {
-            "EmployeeID" : "EmployeeID"
+        CONTROLS : {
+            "OrdersTable" : "ordersTable",
+            "InpOrderNumber" : "inpOrderNumber",
+            "DateRangeCreationDate" : "dateRangeCreationDate",
+            "MultiSelectStatus" : "multiSelectStatus"
+        },
+        MODEL : {
+            "Status" : "statusModel"
         },
         PARAM : {
-            "arguments" : "arguments"
+            "SelectionSet" : "selectionSet",
+            "Items" : "items"
         },
-        ENTITY_EMP : {
-            "Name" : "/Employees",
-            "Field" : {
-                
-            }
+        DATE_FORMAT : {
+            "Pattern01" : "yyyy-MM-dd",
+            "Pattern02" : "dd MMM yyyy"
+        },
+        STATUS : {
+            "Created" : "Created",
+            "Released" : "Released",
+            "PartiallyCompleted" : "Partially Completed",
+            "Delivered" : "Delivered"
+        },
+        STATUS_COLOR : {
+            "None" : "None",
+            "Warning" : "Warning",
+            "Information" : "Information",
+            "Success" : "Success"
+        },
+        FILTER_FIELD : {
+            "OrderNum" : "OrderNum",
+            "CreateDat" : "CreateDat",
+            "Status" : "Status"
         }
     };
 

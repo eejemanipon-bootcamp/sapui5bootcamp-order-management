@@ -1,30 +1,43 @@
 sap.ui.define([
-	"sap/ui/core/library",
-    "sap/ui/model/type/Currency"
-], function(mobileLibrary,Currency) {
+    "com/ui5/trng/sapui5bootcampordermanagement/utils/Constants",
+	"sap/ui/core/format/DateFormat"
+], function(Constants, DateFormat) {
 	"use strict";
 
 	const formatter = {
+        /**
+         * Method to format OData date format (yyyy-MM-dd) into medium date format (dd MMM yyyy)
+         * @public
+         * @param {String} [sDate] OData date
+         * @returns {Date} Medium date format
+         */
         formatDate: function(sDate) {			
-	        // if(!sDate) return"";
+	        if(sDate){
+                const oDateFormatInput = DateFormat.getDateInstance({ pattern: Constants.DATE_FORMAT.Pattern01 });
+                let oDate = oDateFormatInput.parse(sDate);
 
-            // const iTimestamp = parseInt(sDate.replace(/\/Date\((\d+)\)\//, '$1'), 10);
-            // const oDate = new Date(iTimestamp);
-            // const oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "dd MMM yyyy" });
-            // return oDateFormat.format(oDate);
+                const oDateFormatOutput = DateFormat.getDateInstance({ pattern: Constants.DATE_FORMAT.Pattern02 });
+                return oDateFormatOutput.format(oDate);
+            }
         },
+        /**
+         * Method to format color to its corresponding state
+         * @public
+         * @param {String} [sStatus] Status value
+         * @returns {ObjectStatus} Color for status
+         */
         statusColor: function(sStatus) {
             switch(sStatus){
-                case "Created":
-                    return "None";
-                case "Released":
-                    return "Warning";
-                case "Partially Completed":
-                    return "Information";
-                case "Delivered":
-                    return "Success";
+                case Constants.STATUS.Created:
+                    return Constants.STATUS_COLOR.None;
+                case Constants.STATUS.Released:
+                    return Constants.STATUS_COLOR.Warning;
+                case Constants.STATUS.PartiallyCompleted:
+                    return Constants.STATUS_COLOR.Information;
+                case Constants.STATUS.Delivered:
+                    return Constants.STATUS_COLOR.Success;
                 default:
-                    return "None";
+                    return Constants.STATUS_COLOR.None;
             }
         }
 	};

@@ -7,7 +7,7 @@
                 </Key>
                 <Property Name="OrderNum" Type="Edm.String" MaxLength="6" Nullable="false" sap:label="Order Number">
                 </Property>
-                <Property Name="CreateDat" Type="Edm.Date" sap:label="Creation Date">
+                <Property Name="CreateDat" Type="Edm.String" sap:label="Creation Date">
                 </Property>
                 <Property Name="RecPlantID" Type="Edm.String" MaxLength="4" sap:label="Receiving Plant ID">
                 </Property>

@@ -9,7 +9,7 @@
         <f:header>
             <f:DynamicPageHeader>
                 <f:content>
-                    <fb:FilterBar id="filterbar" 
+                    <fb:FilterBar id="ordersFilterBar" 
                         persistencyKey="myPersKey" 
                         useToolbar="false" 
                         search="onFilterSearch" 
@@ -17,27 +17,30 @@
                         showClearOnFB="true"
                         showFilterConfiguration="false">
                         <fb:filterGroupItems>
-                            <fb:FilterGroupItem name="OrderNumber" label="Order Number" groupName="Group1" visibleInFilterBar="true">
+                            <fb:FilterGroupItem name="OrderNumber" label="{i18n>order.number}" groupName="Group1" visibleInFilterBar="true">
                                 <fb:control>
-                                    <Input id="inpOrderNumber" placeholder="Order Number"/>
+                                    <Input id="inpOrderNumber" placeholder="{i18n>order.number}"/>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem name="CreationDate" label="Creation Date" groupName="Group1" visibleInFilterBar="true">
+                            <fb:FilterGroupItem name="CreationDate" label="{i18n>order.creationDate}" groupName="Group1" visibleInFilterBar="true">
                                 <fb:control>
-                                    <DateRangeSelection id="dateRangeCreationDate" placeholder="Creation Date"/>
+                                    <DateRangeSelection id="dateRangeCreationDate" 
+                                        placeholder="{i18n>order.creationDate}"
+                                        displayFormat="yyyy-MM-dd"
+                                        valueFormat="yyyy-MM-dd"
+                                    />
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem name="Status" label="Status" groupName="Group1" visibleInFilterBar="true">
+                            <fb:FilterGroupItem name="Status" label="{i18n>order.status}" groupName="Group1" visibleInFilterBar="true">
                                 <fb:control>
                                     <MultiComboBox
                                         id="multiSelectStatus"
                                         name="MultiSelectStatus"
-                                        selectionChange="onSelectionChange"
+                                        items="{
+                                            path: 'statusModel>/statusOptions'
+                                        }"
                                     >
-                                        <core:Item key="statusCreated" text="Created"/>
-                                        <core:Item key="statusReleased" text="Released"/>
-                                        <core:Item key="statusPartComp" text="Partially Completed"/>
-                                        <core:Item key="statusDelivered" text="Delivered"/>
+                                        <core:Item key="{statusModel>key}" text="{statusModel>text}"/>
                                     </MultiComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
@@ -51,41 +54,44 @@
                 id="ordersTable"
                 inset="false"
                 items="{
-                    path: '/Orders'
+                    path: '/Orders',
+                    sorter: {
+                        path: 'OrderNum'
+                    }
                 }"
                 mode="MultiSelect"
             >
                 <headerToolbar>
                     <OverflowToolbar>
                         <content>
-                            <Title text="Orders" level="H2"/>
+                            <Title text="{i18n>order.tableTitle}" level="H2"/>
                             <ToolbarSpacer />
                             <Button
-                                tooltip="Add"
+                                tooltip="{i18n>button.create}"
                                 icon="sap-icon://add"
-                                press="onBtnPressAdd"/>
+                                press="_onBtnPressOrderCreate"/>
                             <Button
-                                tooltip="Delete"
+                                tooltip="{i18n>button.delete}"
                                 icon="sap-icon://delete"
-                                press="onBtnPressDelete"/>
+                                press="_onBtnPressOrderDelete"/>
                         </content>
                     </OverflowToolbar>
                 </headerToolbar>
                 <columns>
                     <Column minScreenWidth="Tablet" demandPopin="true">
-                        <Text text="Order Number"/>
+                        <Text text="{i18n>column.orderNumber}"/>
                     </Column>
                     <Column minScreenWidth="Tablet" demandPopin="true">
-                        <Text text="Creation Date"/>
+                        <Text text="{i18n>column.creationDate}"/>
                     </Column>
                     <Column minScreenWidth="Tablet" demandPopin="true">
-                        <Text text="Receiving Plant"/>
+                        <Text text="{i18n>column.receivingPlant}"/>
                     </Column>
                     <Column minScreenWidth="Tablet" demandPopin="true">
-                        <Text text="Delivering Plant"/>
+                        <Text text="{i18n>column.deliveringPlant}"/>
                     </Column>
                     <Column minScreenWidth="Tablet" demandPopin="true">
-                        <Text text="Status"/>
+                        <Text text="{i18n>column.status}"/>
                     </Column>
                 </columns>
 
