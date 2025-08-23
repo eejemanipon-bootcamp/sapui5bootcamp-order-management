@@ -1,0 +1,114 @@
+<mvc:View controllerName="com.ui5.trng.sapui5bootcampordermanagement.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar">
+    <f:DynamicPage id="pageMain">
+        <f:header>
+            <f:DynamicPageHeader>
+                <f:content>
+                    <fb:FilterBar id="filterbar" 
+                        persistencyKey="myPersKey" 
+                        useToolbar="false" 
+                        search="onFilterSearch" 
+                        clear="onFilterClear"
+                        showClearOnFB="true"
+                        showFilterConfiguration="false">
+                        <fb:filterGroupItems>
+                            <fb:FilterGroupItem name="OrderNumber" label="Order Number" groupName="Group1" visibleInFilterBar="true">
+                                <fb:control>
+                                    <Input id="inpOrderNumber" placeholder="Order Number"/>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem name="CreationDate" label="Creation Date" groupName="Group1" visibleInFilterBar="true">
+                                <fb:control>
+                                    <DateRangeSelection id="dateRangeCreationDate" placeholder="Creation Date"/>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem name="Status" label="Status" groupName="Group1" visibleInFilterBar="true">
+                                <fb:control>
+                                    <MultiComboBox
+                                        id="multiSelectStatus"
+                                        name="MultiSelectStatus"
+                                        selectionChange="onSelectionChange"
+                                    >
+                                        <core:Item key="statusCreated" text="Created"/>
+                                        <core:Item key="statusReleased" text="Released"/>
+                                        <core:Item key="statusPartComp" text="Partially Completed"/>
+                                        <core:Item key="statusDelivered" text="Delivered"/>
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <Table
+                id="ordersTable"
+                inset="false"
+                items="{
+                    path: '/Orders'
+                }"
+                mode="MultiSelect"
+            >
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <content>
+                            <Title text="Orders" level="H2"/>
+                            <ToolbarSpacer />
+                            <Button
+                                tooltip="Add"
+                                icon="sap-icon://add"
+                                press="onBtnPressAdd"/>
+                            <Button
+                                tooltip="Delete"
+                                icon="sap-icon://delete"
+                                press="onBtnPressDelete"/>
+                        </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="Order Number"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="Creation Date"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="Receiving Plant"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="Delivering Plant"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="Status"/>
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem vAlign="Middle"
+                        type="Navigation"   
+                        press="onListItemPress">
+                        <cells>
+                            <ObjectIdentifier title="{OrderNum}"/>
+                            <Text text="{
+                                path: 'CreateDat',
+                                formatter: '.formatter.formatDate'
+                            }" />
+                            <Text text="{RecPlantID} - {RecPlantDesc}" />
+                            <Text text="{DelPlantID} - {DelPlantDesc}" />
+                            <ObjectStatus 
+                                text="{Status}"
+                                state="{path: 'Status', formatter: '.formatter.statusColor'}"
+                            />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

@@ -1,0 +1,38 @@
+[
+    {
+        "CreateDat": "/Date(1735689600000)/",
+        "RecPlantDesc": "Singapore",
+        "DelPlantDesc": "Malaysia",
+        "Status": "Created",
+        "OrderNum": "012201",
+        "RecPlantID": "9101",
+        "DelPlantID": "9102"
+    },
+    {
+        "CreateDat": "/Date(1735776000000)/",
+        "RecPlantDesc": "Singapore",
+        "DelPlantDesc": "Malaysia",
+        "Status": "Released",
+        "OrderNum": "012202",
+        "RecPlantID": "9101",
+        "DelPlantID": "9102"
+    },
+    {
+        "CreateDat": "/Date(1735862400000)/",
+        "RecPlantDesc": "Singapore",
+        "DelPlantDesc": "Malaysia",
+        "Status": "Partially Completed",
+        "OrderNum": "012203",
+        "RecPlantID": "9101",
+        "DelPlantID": "9102"
+    },
+    {
+        "CreateDat": "/Date(1735948800000)/",
+        "RecPlantDesc": "Singapore",
+        "DelPlantDesc": "Malaysia",
+        "Status": "Delivered",
+        "OrderNum": "012204",
+        "RecPlantID": "9101",
+        "DelPlantID": "9102"
+    }
+]
