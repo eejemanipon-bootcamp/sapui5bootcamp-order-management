@@ -10,7 +10,12 @@ sap.ui.define([
     return BaseController.extend("com.ui5.trng.sapui5bootcampordermanagement.controller.Main", {
         onInit() {
             this._oTable = this.byId(Constants.CONTROLS.OrdersTable);
-            this.setStatusModel();
+
+            // Initialize Status model
+            this.initStatusModel();
+
+            // Update the Table's title
+            this.updateTableTitle(Constants.CONTROLS.OrdersTable, Constants.CONTROLS.OrdersTableTitle, this.getText("order.tableTitle"));
         },
         /**
          * Method to filter data bound to Table from OData based on FilterBar fields value.
@@ -90,9 +95,19 @@ sap.ui.define([
 			// Apply filter settings
 			oBinding.filter([]);
         },
+        /**
+         * Navigate to Create page.
+         * @public
+         */
         _onBtnPressOrderCreate: function(){
-
+            this.navigateTo(Constants.ROUTE.Create.Name);
         },
+        /**
+         * Performs delete to the dataset of the selected items in table.
+         * Since we are working on a local OData, this just simulates 
+         * deletion In-memory only.
+         * @public
+         */
         _onBtnPressOrderDelete: function(){
             let aSelectedItems = this._oTable.getSelectedItems();
 
@@ -101,9 +116,9 @@ sap.ui.define([
                 return;
             }
 
-            let sConfirmMsg    = this.getText("confirm.deleteItems", [aSelectedItems.length]),
-                sSuccessDeleteMsg = this.getText("info.successDelete"),
-                sfailedDeleteMsg  = this.getText("error.failedDelete");
+            const sConfirmMsg       = this.getText("confirm.deleteItems", [aSelectedItems.length]),
+                  sSuccessDeleteMsg = this.getText("info.successDelete"),
+                  sfailedDeleteMsg  = this.getText("error.failedDelete");
 
             MessageBox.confirm(sConfirmMsg, {
                 actions: [MessageBox.Action.YES, MessageBox.Action.NO],
@@ -127,6 +142,18 @@ sap.ui.define([
                     }
                 }.bind(this)
             });
+        },
+        /**
+         * Navigate to Details page of the selected item.
+         * @public
+         * @param {sap.ui.base.Event} [oEvent] The event handler
+         */
+        _onListItemPress: function(oEvent){
+            const oItem           = oEvent.getSource(),
+                  oBindingContext = oItem.getBindingContext(),
+                  sOrderNum       = oBindingContext.getProperty(Constants.FIELD.OrderNum); 
+
+            this.navigateTo(Constants.ROUTE.Details.Name, { OrderNum: sOrderNum });
         }
     });
 });

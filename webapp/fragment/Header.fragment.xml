@@ -1,0 +1,18 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+    xmlns:f="sap.f">
+
+    <f:DynamicPageTitle>
+        <f:heading>
+            <Title 
+                level="H2"
+                text="{= ${viewState>/mode} === 'Create'  ? ${i18n>page.createTitle} :
+                         ${viewState>/mode} === 'Details' ? ${i18n>page.detailsTitle} :
+                         ${viewState>/mode} === 'Edit'    ? ${i18n>page.editTitle} :
+                                                            ${i18n>title} }" 
+            />
+        </f:heading>
+    </f:DynamicPageTitle>
+
+</core:FragmentDefinition>

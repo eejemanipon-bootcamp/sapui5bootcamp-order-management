@@ -39,6 +39,26 @@ sap.ui.define([
                 default:
                     return Constants.STATUS_COLOR.None;
             }
+        },
+        /**
+         * Calculates the total price by multiplying quantity and unit price.
+         * @public
+         * @param {String|Number} [vQuantity] The quantity of the item.
+         * @param {String|Number} [vUnitPrice] The price per quantity.
+         * @returns {String} Formatted total price.
+         */
+        formatTotalPrice: function(vQuantity, vUnitPrice) {			
+	        const fQty   = parseFloat(vQuantity),
+                  fPrice = parseFloat(vUnitPrice);
+                  
+            let fTotal;
+            
+            if (isNaN(fQty) || isNaN(fPrice)){
+                return "0";
+            }
+
+            fTotal = fQty * fPrice;
+            return `${fTotal.toFixed(0)}`;
         }
 	};
 

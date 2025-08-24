@@ -64,7 +64,7 @@
                 <headerToolbar>
                     <OverflowToolbar>
                         <content>
-                            <Title text="{i18n>order.tableTitle}" level="H2"/>
+                            <Title id="ordersTableTitle" text="{i18n>order.tableTitle}" level="H2"/>
                             <ToolbarSpacer />
                             <Button
                                 tooltip="{i18n>button.create}"
@@ -98,7 +98,7 @@
                 <items>
                     <ColumnListItem vAlign="Middle"
                         type="Navigation"   
-                        press="onListItemPress">
+                        press="_onListItemPress">
                         <cells>
                             <ObjectIdentifier title="{OrderNum}"/>
                             <Text text="{

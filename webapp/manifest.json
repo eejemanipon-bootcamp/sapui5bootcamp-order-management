@@ -95,12 +95,45 @@
           "target": [
             "TargetMain"
           ]
+        },
+        {
+          "name": "RouteCreate",
+          "pattern": "create",
+          "target": [
+            "TargetCreate"
+          ]
+        },
+        {
+          "name": "RouteDetails",
+          "pattern": "details/{OrderNum}",
+          "target": [
+            "TargetDetails"
+          ]
+        },
+        {
+          "name": "RouteEdit",
+          "pattern": "details/{OrderNum}/edit",
+          "target": [
+            "TargetEdit"
+          ]
         }
       ],
       "targets": {
         "TargetMain": {
           "id": "Main",
           "name": "Main"
+        },
+        "TargetCreate": {
+          "id": "Create",
+          "name": "Create"
+        },
+        "TargetDetails": {
+          "id": "Details",
+          "name": "Details"
+        },
+        "TargetEdit": {
+          "id": "Edit",
+          "name": "Edit"
         }
       }
     },

@@ -1,0 +1,20 @@
+<mvc:View controllerName="com.ui5.trng.sapui5bootcampordermanagement.controller.Create"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core">
+    <f:DynamicPage id="pageCreate"
+        class="sapUiResponsiveContentPadding"
+        showFooter="true">
+        <f:title>
+            <core:Fragment fragmentName="com.ui5.trng.sapui5bootcampordermanagement.fragment.Header" type="XML" />
+        </f:title>
+        <f:content>
+            <!-- Your page content here -->
+        </f:content>
+        <f:footer>
+            <core:Fragment fragmentName="com.ui5.trng.sapui5bootcampordermanagement.fragment.Footer" type="XML" />
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>

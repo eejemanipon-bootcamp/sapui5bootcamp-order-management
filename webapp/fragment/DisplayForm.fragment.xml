@@ -1,0 +1,56 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form">
+
+    <f:SimpleForm id="orderDisplaySimpleForm"
+        editable="false"
+        layout="ResponsiveGridLayout"
+        title="{i18n>order.formTitle}"
+        labelSpanXL="4"
+        labelSpanL="4"
+        labelSpanM="4"
+        labelSpanS="12"
+        adjustLabelSpan="false"
+        emptySpanXL="5"
+        emptySpanL="5"
+        emptySpanM="5"
+        emptySpanS="0"
+        columnsXL="1"
+        columnsL="1"
+        columnsM="1"
+        singleContainerFullSize="true" 
+        visible="{= ${viewState>/mode} === 'Details' }">
+        <f:content>
+            <Label text="{i18n>order.number}" labelFor="inpOrderNum" />
+            <Text id="txtOrderNum" 
+                text="{OrderNum}" 
+            />
+
+            <Label text="{i18n>order.createdOn}" />
+            <Text id="txtCreatedOn" 
+                text="{
+                    path: 'CreateDat',
+                    formatter: '.formatter.formatDate'
+                }" 
+            />
+
+            <Label text="{i18n>order.receivingPlant}" />
+            <Text id="txtReceivingPlant" 
+                text="{RecPlantID} - {RecPlantDesc}" 
+            />
+
+            <Label text="{i18n>order.deliveringPlant}" />
+            <Text id="txtDeliveringPlant" 
+                text="{DelPlantID} - {DelPlantDesc}" 
+            />
+
+            <Label text="{i18n>order.status}" />
+            <Text id="txtStatus" 
+                text="{Status}" 
+            />
+        </f:content>
+    </f:SimpleForm>
+
+</core:FragmentDefinition>

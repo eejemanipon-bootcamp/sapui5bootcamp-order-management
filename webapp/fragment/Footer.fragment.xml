@@ -1,0 +1,25 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+
+    <OverflowToolbar>
+        <ToolbarSpacer/>
+        <Button 
+            type="Default" 
+            text="{i18n>button.edit}"
+            visible="{= ${viewState>/mode} === 'Details'}"
+            press=".onBtnPressOrderEdit"/>
+
+        <Button 
+            type="Emphasized" 
+            text="{i18n>button.save}"
+            visible="{= ${viewState>/mode} !== 'Details'}"
+            press=".onBtnPressOrderSave"/>
+
+        <Button 
+            type="{= ${viewState>/mode} !== 'Details' ? 'Reject' : 'Default'}" 
+            text="{i18n>button.cancel}"
+            press=".onBtnPressCancel"/>
+    </OverflowToolbar>
+
+</core:FragmentDefinition>
