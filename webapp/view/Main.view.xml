@@ -12,8 +12,8 @@
                     <fb:FilterBar id="ordersFilterBar" 
                         persistencyKey="myPersKey" 
                         useToolbar="false" 
-                        search="onFilterSearch" 
-                        clear="onFilterClear"
+                        search="_onFilterSearch" 
+                        clear="_onFilterClear"
                         showClearOnFB="true"
                         showFilterConfiguration="false">
                         <fb:filterGroupItems>

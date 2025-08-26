@@ -35,34 +35,13 @@ sap.ui.define([
                 this.bindViewToEntity(this.getView(), Constants.ENTITY.Orders, oParam.OrderNum);
             }
 
-            // Create template for the table
-            const oTemplate = new sap.m.ColumnListItem({
-                cells: [
-                    new sap.m.ObjectIdentifier({
-                        title: "{ProductName}"
-                    }),
-                    new sap.m.Text({
-                        text: "{Quantity}"
-                    }),
-                    new sap.m.Text({
-                        text: "{UnitPrice}"
-                    }),
-                    new sap.m.Text({
-                        text: {
-                            parts    : ["Quantity", "UnitPrice"],
-                            formatter: this.formatter.formatTotalPrice
-                        }
-                    }),
-                ]
-            });
-
             // Bind the table to the order items
             if(oTable){
                 this.bindTable(
                     oTable, 
                     Constants.ENTITY.Orders, 
                     oParam.OrderNum, 
-                    oTemplate,
+                    this.setTableTemplate(Constants.TABLE.Product),
                     Constants.ENTITY.OrderItem
                 );
             }
@@ -72,10 +51,9 @@ sap.ui.define([
          * @public
          */
         onBtnPressOrderEdit: function(){
-            const oContext  = this.getView().getBindingContext();
+            const sOrderNum = this.getBindingContextValue(Constants.FIELD.OrderNum);
 
-            if (oContext){
-                const sOrderNum = oContext.getProperty(Constants.FIELD.OrderNum);
+            if (sOrderNum){
 
                 this.navigateTo(Constants.ROUTE.Edit.Name, { OrderNum: sOrderNum });
             }

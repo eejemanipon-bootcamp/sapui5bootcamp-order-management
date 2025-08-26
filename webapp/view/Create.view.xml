@@ -11,7 +11,10 @@
             <core:Fragment fragmentName="com.ui5.trng.sapui5bootcampordermanagement.fragment.Header" type="XML" />
         </f:title>
         <f:content>
-            <!-- Your page content here -->
+            <VBox class="sapUiSmallMargin">
+                <core:Fragment fragmentName="com.ui5.trng.sapui5bootcampordermanagement.fragment.OrderDetails" type="XML" />
+                <core:Fragment fragmentName="com.ui5.trng.sapui5bootcampordermanagement.fragment.ProductsTable" type="XML" />
+            </VBox>
         </f:content>
         <f:footer>
             <core:Fragment fragmentName="com.ui5.trng.sapui5bootcampordermanagement.fragment.Footer" type="XML" />

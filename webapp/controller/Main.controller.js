@@ -9,8 +9,6 @@ sap.ui.define([
 
     return BaseController.extend("com.ui5.trng.sapui5bootcampordermanagement.controller.Main", {
         onInit() {
-            this._oTable = this.byId(Constants.CONTROLS.OrdersTable);
-
             // Initialize Status model
             this.initStatusModel();
 
@@ -22,9 +20,10 @@ sap.ui.define([
          * @public
          * @param {sap.ui.base.Event} [oEvent] Event handler
          */
-        onFilterSearch: function(oEvent){
-            let aControls = oEvent.getParameter(Constants.PARAM.SelectionSet),
-				oBinding  = this._oTable.getBinding(Constants.PARAM.Items),
+        _onFilterSearch: function(oEvent){
+            let oTable    = this.byId(Constants.CONTROLS.OrdersTable),
+                aControls = oEvent.getParameter(Constants.PARAM.SelectionSet),
+				oBinding  = oTable.getBinding(Constants.PARAM.Items),
 				aFilters  = [];
 
             aControls.forEach( control => {
@@ -74,9 +73,10 @@ sap.ui.define([
          * @public
          * @param {sap.ui.base.Event} [oEvent] Event handler
          */
-        onFilterClear: function(oEvent){
-            let aControls = oEvent.getParameter(Constants.PARAM.SelectionSet),
-				oBinding  = this._oTable.getBinding(Constants.PARAM.Items);
+        _onFilterClear: function(oEvent){
+            let oTable    = this.byId(Constants.CONTROLS.OrdersTable),
+                aControls = oEvent.getParameter(Constants.PARAM.SelectionSet),
+				oBinding  = oTable.getBinding(Constants.PARAM.Items);
 
             aControls.forEach( control => {
                 let sId = control.getId();
@@ -109,7 +109,8 @@ sap.ui.define([
          * @public
          */
         _onBtnPressOrderDelete: function(){
-            let aSelectedItems = this._oTable.getSelectedItems();
+            let oTable         = this.byId(Constants.CONTROLS.OrdersTable),
+                aSelectedItems = oTable.getSelectedItems();
 
             if (aSelectedItems.length === 0){
                 MessageBox.error(this.getText("error.noSelection"));
@@ -124,7 +125,7 @@ sap.ui.define([
                 actions: [MessageBox.Action.YES, MessageBox.Action.NO],
                 onClose: function (sAction){
                     if (sAction === MessageBox.Action.YES){
-                        let oModel = this.getModel();
+                        const oModel = this.getModel();
 
                         aSelectedItems.forEach(function (oItem){
                             let sPath = oItem.getBindingContext().getPath();

@@ -26,6 +26,7 @@ sap.ui.define([], () => {
             "OrdersTable"           : "ordersTable",
             "OrdersTableTitle"      : "ordersTableTitle",
             "ProductsTable"         : "productsTable",
+            "ProductsTableSearch"   : "productsTableSearch",
             "ProductsTableTitle"    : "productsTableTitle",
             "InpOrderNumber"        : "inpOrderNumber",
             "DateRangeCreationDate" : "dateRangeCreationDate",
@@ -37,11 +38,15 @@ sap.ui.define([], () => {
             "ViewState" : "viewState"
         },
         PARAM : {
-            "SelectionSet" : "selectionSet",
-            "Items"        : "items",
-            "Name"         : "name",
-            "Arguments"    : "arguments",
-            "Total"        : "total"
+            "SelectionSet"  : "selectionSet",
+            "Items"         : "items",
+            "Name"          : "name",
+            "Arguments"     : "arguments",
+            "Total"         : "total",
+            "Value"         : "value",
+            "Selected"      : "selected",
+            "ListItem"      : "listItem",
+            "SelectedItems" : "selectedItems"
         },
         DATE_FORMAT : {
             "Pattern01" : "yyyy-MM-dd",
@@ -60,7 +65,10 @@ sap.ui.define([], () => {
             "Success"     : "Success"
         },
         FIELD : {
-            "OrderNum" : "OrderNum"
+            "OrderNum"    : "OrderNum",
+            "ProductID"   : "ProductID",
+            "ProductName" : "ProductName",
+            "DelPlantID"  : "DelPlantID"
         },
         FILTER_FIELD : {
             "OrderNum"  : "OrderNum",
@@ -72,10 +80,19 @@ sap.ui.define([], () => {
         },
         ENTITY : {
             "Orders"    : "Orders",
-            "OrderItem" : "OrderItem"
+            "OrderItem" : "OrderItem",
+            "Products"  : "Products",
+            "Product"   : "Product"
         },
         EVENT : {
             "UpdateFinished" : "updateFinished"
+        },
+        TABLE : {
+            "Product"       : "Product",
+            "ProductSearch" : "ProductSearch"
+        },
+        FRAGMENT : {
+            "ProductDialog" : "com.ui5.trng.sapui5bootcampordermanagement.fragment.ProductDialog"
         }
     };
 

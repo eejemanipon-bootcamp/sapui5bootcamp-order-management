@@ -1,65 +1,65 @@
 [
     {
         "CreateDat": "2025-01-02",
-        "RecPlantDesc": "Singapore",
-        "DelPlantDesc": "Malaysia",
         "Status": "Released",
         "OrderNum": "012202",
         "RecPlantID": "9101",
-        "DelPlantID": "9102"
+        "RecPlantDesc": "Singapore",
+        "DelPlantID": "9102",
+        "DelPlantDesc": "Philippines"
     },
     {
         "CreateDat": "2025-01-01",
-        "RecPlantDesc": "Singapore",
-        "DelPlantDesc": "Malaysia",
         "Status": "Created",
         "OrderNum": "012201",
         "RecPlantID": "9101",
-        "DelPlantID": "9102"
+        "RecPlantDesc": "Singapore",
+        "DelPlantID": "9102",
+        "DelPlantDesc": "Philippines"
     },
     {
         "CreateDat": "2025-01-03",
-        "RecPlantDesc": "Singapore",
-        "DelPlantDesc": "Malaysia",
         "Status": "Partially Completed",
         "OrderNum": "012203",
         "RecPlantID": "9101",
-        "DelPlantID": "9102"
+        "RecPlantDesc": "Singapore",
+        "DelPlantID": "9102",
+        "DelPlantDesc": "Philippines"
     },
     {
         "CreateDat": "2025-01-04",
-        "RecPlantDesc": "Singapore",
-        "DelPlantDesc": "Malaysia",
         "Status": "Delivered",
         "OrderNum": "012204",
         "RecPlantID": "9101",
-        "DelPlantID": "9102"
+        "RecPlantDesc": "Singapore",
+        "DelPlantID": "9102",
+        "DelPlantDesc": "Philippines"
     },
     {
         "CreateDat": "2025-01-05",
-        "RecPlantDesc": "Singapore",
-        "DelPlantDesc": "Malaysia",
         "Status": "Created",
         "OrderNum": "012205",
         "RecPlantID": "9101",
-        "DelPlantID": "9102"
+        "RecPlantDesc": "Singapore",
+        "DelPlantID": "9102",
+        "DelPlantDesc": "Philippines"
     },
     {
         "CreateDat": "2025-01-06",
-        "RecPlantDesc": "Singapore",
-        "DelPlantDesc": "Malaysia",
         "Status": "Created",
         "OrderNum": "012206",
         "RecPlantID": "9101",
-        "DelPlantID": "9102"
+        "RecPlantDesc": "Singapore",
+        "DelPlantID": "9102",
+        "DelPlantDesc": "Philippines"
     },
     {
         "CreateDat": "2025-01-07",
-        "RecPlantDesc": "Singapore",
-        "DelPlantDesc": "Malaysia",
         "Status": "Created",
         "OrderNum": "012207",
         "RecPlantID": "9101",
-        "DelPlantID": "9102"
+        "RecPlantDesc": "Singapore",
+        "DelPlantID": "9102",
+        "DelPlantDesc": "Philippines"
     }
 ]

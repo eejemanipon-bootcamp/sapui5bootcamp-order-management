@@ -170,7 +170,10 @@ sap.ui.define([
                     path             : sPath,
                     model            : sModel,
                     template         : oTemplate,
-                    templateShareable: false
+                    templateShareable: false,
+                    parameters: {
+                        expand: Constants.ENTITY.Product
+                    }
                 });
             }
         },
@@ -191,6 +194,68 @@ sap.ui.define([
                     this.byId(sTitleId).setText(`${sTitle} (${iCount})`);
                 }.bind(this));
             }
+        },
+        /**
+         * Attaches a template to bind in the table
+         * @public
+         * @param {String} [sTable] The table identifier/name.
+         * @returns {sap.m.ColumnListItem} The ColumnListItem template.
+         */
+        setTableTemplate: function(sTable){
+            switch(sTable){
+                case Constants.TABLE.Product: 
+                    return new sap.m.ColumnListItem({
+                        cells: [
+                            new sap.m.ObjectIdentifier({
+                                title: "{Product/ProductID} - {Product/ProductName}"
+                            }),
+                            new sap.m.Text({
+                                text: "{Quantity}"
+                            }),
+                            new sap.m.Text({
+                                text: "{Product/UnitPrice}"
+                            }),
+                            new sap.m.Text({
+                                text: {
+                                    parts    : ["Quantity", "Product/UnitPrice"],
+                                    formatter: this.formatter.formatTotalPrice
+                                }
+                            }),
+                        ]
+                    });
+
+                case Constants.TABLE.ProductSearch: 
+                    return new sap.m.ColumnListItem({
+                        cells: [
+                            new sap.m.ObjectIdentifier({
+                                title: "{ProductID} - {ProductName}"
+                            }),
+                            new sap.m.Text({
+                                text: "{UnitPrice}"
+                            }),
+                            new sap.m.StepInput({
+                            })
+                        ]
+                    });
+                default:
+            }
+        },
+        /**
+         * Get the binded context field value.
+         * The view should be bound using bindElement.
+         * @public
+         * @param {String} [sProperty] The property.
+         * @returns {String} The return value.
+         */
+        getBindingContextValue: function(sProperty){
+            return this.getView().getBindingContext().getProperty(sProperty);
+        },
+        /**
+         * Convenience method for closing dialog
+         * @public
+         */
+        onBtnCloseDialog: function(oEvent){
+            oEvent.getSource().getParent().close();
         }
     });
 });
