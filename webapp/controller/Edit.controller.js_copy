@@ -14,6 +14,12 @@ sap.ui.define([
          * @public
          */
         onInit() {
+            // Clone current OrderItems into a staging JSONModel for temporary edits
+            let oTempModel = new JSONModel({
+                OrderItems: []
+            });
+            this.setModel(oTempModel, Constants.MODEL.Local);
+
             this.getComponentRouter().getRoute(Constants.ROUTE.Edit.Name).attachPatternMatched(this._onPatternMatched, this);
 
             // Update the Table's title
@@ -40,6 +46,9 @@ sap.ui.define([
 
                 // Initialize Status model
                 this.initStatusModel(this.getBindingContextValue(Constants.FIELD.Status));
+
+                // Loads initial OrderItems into the temporary model(oTempModel)
+                this._loadInitialOrderItems();
             }
 
             // Bind the table to the order items
@@ -51,6 +60,27 @@ sap.ui.define([
                     this.setTableTemplate(Constants.TABLE.Product),
                     Constants.ENTITY.OrderItem
                 );
+            }
+        },
+        /**
+         * Loads the current order items into the local JSON model for UI-side manipulation.
+         * This prevents immediate persistence to the backend.
+         * @public
+         */
+        _loadInitialOrderItems(){
+            const _this = this;
+
+            const oModel   = this.getModel(),
+                  oContext = this.getView().getBindingContext();
+
+            if (oContext){
+                let sPath = oContext.getPath();
+
+                oModel.read(sPath + `/${Constants.ENTITY.OrderItem}`, {
+                    success: function(oData){
+                        _this.getModel(Constants.MODEL.Local).setProperty(`/${Constants.ENTITY.OrderItem}`, oData.results || []);
+                    }.bind(this)
+                });
             }
         },
         /**
@@ -129,44 +159,38 @@ sap.ui.define([
 			oBinding.filter(aFilters);
         },
         /**
+         * Sets and validates control attribute and value when item is selection is changed.
+         * @public
+         * @param {sap.ui.base.Event} [oEvent] Event handler
+         */
+        _onSelectionChange: function(oEvent){
+        },
+        /**
          * Performs add of product to the table list.
          * @public
          * @param {sap.ui.base.Event} [oEvent] Event handler
          */
         _onAddProduct: function(oEvent){
-            const _this = this;
-
-            const oModel = this.getModel(),
-                  sPath  = this.getView().getBindingContext().getPath();
-
-            let aSelectedItems = oEvent.getParameter(Constants.PARAM.SelectedItems);
+            let oTable         = this.byId(Constants.CONTROLS.ProductsTable),
+                aSelectedItems = oEvent.getParameter(Constants.PARAM.SelectedContexts),
+                oTempModel     = this.getModel(Constants.MODEL.Local),
+                aOrderItems    = oTempModel.getProperty(`/${Constants.ENTITY.OrderItem}`);
 
             if (aSelectedItems.length === 0){
                 MessageBox.information(this.getText("info.noItemSelected"));
                 return;
             }
 
-            aSelectedItems.forEach(function (oItem){
-                const oContext = oItem.getBindingContext();
-
-                const sProductAddedMsg = _this.getText("info.productAdded", oContext.getObject().ProductID);
-                
-                let oStepInput = oItem.getCells()[2],
-                    iQty       = oStepInput.getValue() || 1;
-
-                let oNewItem = {
+            aSelectedItems.forEach(function (oContext){
+                aOrderItems.push({
                     OrderNum: oContext.getObject().OrderNum,
                     ProductID: oContext.getObject().ProductID,
-                    Quantity: iQty
-                };
-
-                oModel.create(sPath + `/${Constants.ENTITY.OrderItem}`, oNewItem, {
-                    success: function(){
-                        sap.m.MessageToast.show(sProductAddedMsg);
-                    }
+                    Quantity: oContext.getObject().Quantity
                 });
+
+                // oTable.addItem(oContext);
             });
-        },
+},
         /**
          * Performs delete to the dataset of the selected items in table.
          * Since we are working on a local OData, this just simulates 
@@ -175,8 +199,9 @@ sap.ui.define([
          */
         _onBtnPressProductDelete: function(){
             let oTable         = this.byId(Constants.CONTROLS.ProductsTable),
-                aSelectedItems = oTable.getSelectedContexts(),
-                oModel         = this.getModel();
+                aSelectedItems = oTable.getSelectedItems(),
+                oTempModel     = this.getModel(Constants.MODEL.Local),
+                aOrderItems    = oTempModel.getProperty(`/${Constants.ENTITY.OrderItem}`);
 
             if (aSelectedItems.length === 0){
                 MessageBox.error(this.getText("error.noSelection"));
@@ -191,8 +216,13 @@ sap.ui.define([
                     if (sAction === MessageBox.Action.YES){
                         // Remove selected items from UI only
                         aSelectedItems.forEach(function (oItem){
-                            oModel.remove(oItem.getPath());
+                            aOrderItems.pop({
+                                ProductID: oItem.getBindingContext().getProperty(Constants.FIELD.ProductID)
+                            });
+
+                            oTable.removeItem(oItem);
                         });
+
                     }
                 }.bind(this)
             });
@@ -208,10 +238,13 @@ sap.ui.define([
 
             const oModel      = this.getModel(),
                   sOrderNum   = this.getBindingContextValue(Constants.FIELD.OrderNum),
-                  sPath       = this.getView().getBindingContext().getPath();
+                  sPath       = this.getView().getBindingContext().getPath(),
+                  oTempModel  = this.getModel(Constants.MODEL.Local),
+                  aOrderItems = oTempModel.getProperty(`/${Constants.ENTITY.OrderItem}`);
             
             const sConfirmMsg       = this.getText("confirm.saveChanges"),
-                  sSuccessUpdateMsg = this.getText("info.orderUpdated", sOrderNum);
+                  sSuccessUpdateMsg = this.getText("info.orderUpdated", sOrderNum),
+                  sErrorUpdateMsg = this.getText("error.orderUpdated", sOrderNum);
 
             // Get selected status from statusModel
             let sStatus = this.getModel(Constants.MODEL.Status).getProperty(Constants.PROPERTY.SelectedStatus);
@@ -222,7 +255,34 @@ sap.ui.define([
                 onClose: function (sAction){
                     if (sAction === MessageBox.Action.YES){
                         // Update Status from statusModel
-                        oModel.update(sPath, { Status: sStatus }, {
+                        oModel.update(sPath, { Status: sStatus }, { groupId: Constants.BATCH_ID.OrderChanges });
+
+                        // oModel.read(sPath + `/${Constants.ENTITY.OrderItem}`, {
+                        //     success: function(oData){
+                        //         oData.results.forEach(item => {
+                        //             const sKeyPath = oModel.createKey(sPath + `/${Constants.ENTITY.OrderItem}`,{
+                        //                 OrderNum: item.OrderNum,
+                        //                 ProductID: item.ProductID
+                        //             });
+
+                        //             // Delete existing OrderItems
+                        //             oModel.remove(sKeyPath, {
+                        //                 groupId: Constants.BATCH_ID.OrderChanges
+                        //             });
+                        //         });
+                        //     }.bind(this)
+                        // });
+
+                        // Commit staged OrderItems
+                        aOrderItems.forEach(function (item){
+                            oModel.create(sPath + `/${Constants.ENTITY.OrderItem}`, item, {
+                                groupId: Constants.BATCH_ID.OrderChanges
+                            });
+                        });
+                        
+                        // Submit all changes together
+                        oModel.submitChanges({
+                            groupId: Constants.BATCH_ID.OrderChanges,
                             success: function(){
                                 MessageBox.information(sSuccessUpdateMsg,{
                                     onClose: function(){
@@ -230,8 +290,11 @@ sap.ui.define([
 
                                         _this.navigateToMain(Constants.ROUTE.Main.Name);
                                     }.bind(this)
-                                });
-                            }.bind(this)
+                                });                                
+                            }.bind(this),
+                            error: function(){
+                                sap.m.MessageToast.show(sErrorUpdateMsg);
+                            }
                         });
                     }
                 }

@@ -5,6 +5,10 @@ sap.ui.define([
     "use strict";
 
     return BaseController.extend("com.ui5.trng.sapui5bootcampordermanagement.controller.Details", {
+        /**
+         * Called once after the controller is instantiated.
+         * @public
+         */
         onInit() {
             this.getComponentRouter().getRoute(Constants.ROUTE.Details.Name).attachPatternMatched(this._onPatternMatched, this);
 

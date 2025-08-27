@@ -8,6 +8,10 @@ sap.ui.define([
     "use strict";
 
     return BaseController.extend("com.ui5.trng.sapui5bootcampordermanagement.controller.Main", {
+        /**
+         * Called once after the controller is instantiated.
+         * @public
+         */
         onInit() {
             // Initialize Status model
             this.initStatusModel();
